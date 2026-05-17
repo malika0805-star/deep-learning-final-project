@@ -30,11 +30,21 @@ This project is not based on positive or negative sentiment classification. Inst
 
 ---
 
+## Project Title
+
+**Movie Rating Prediction and Recommendation Using Neural Collaborative Filtering**
+
+This title clearly describes the main goal of the project. The project is focused on predicting movie ratings and using these predictions to recommend movies to users.
+
+---
+
 ## 2. Problem Statement
 
-Online movie platforms contain a very large number of movies. Because of this, users may have difficulty finding movies that match their interests. Recommendation systems help solve this problem by predicting what a user may like and ranking items based on user preferences.
+Online movie platforms contain thousands of movies, so users may spend a lot of time trying to find movies that match their interests. Recommendation systems help solve this problem by predicting what each user may like and ranking items based on predicted user preference.
 
-The problem in this project is to predict the rating that a specific user may give to a specific movie. After predicting ratings for many movies, the system can recommend movies with the highest predicted ratings.
+The main problem in this project is to predict the rating that a specific user may give to a specific movie. After predicting ratings for many movies, the system can rank movies and recommend the movies with the highest predicted ratings.
+
+This project is useful because recommendation systems are widely used in streaming platforms, online stores, music services, and social media. A good recommendation model can improve user experience by helping users find relevant content faster.
 
 ### Input
 
@@ -49,6 +59,14 @@ movieId
 predicted rating
 ```
 
+### Prediction Target
+
+```text
+rating
+```
+
+The target value is a numerical rating from 0.5 to 5.0. This means the project is not a positive/negative classification task. It is a recommendation/ranking task based on rating prediction.
+
 ### Example
 
 ```text
@@ -60,7 +78,7 @@ Output:
 predicted rating = 4.7
 ```
 
-The final system will rank movies according to predicted ratings and recommend the top movies to the user.
+The predicted ratings will be used to rank movies and recommend the top movies to each user.
 
 ---
 
@@ -88,7 +106,7 @@ https://files.grouplens.org/datasets/movielens/ml-20m.zip
 
 ### Dataset Description
 
-MovieLens 20M is a large and meaningful dataset for recommendation system tasks. It contains millions of movie ratings from users.
+MovieLens 20M is a real and large dataset for recommendation system tasks. It contains user ratings for movies and is suitable for training and evaluating recommendation models.
 
 The dataset includes:
 
@@ -98,19 +116,21 @@ The dataset includes:
 27,278 movies
 ```
 
-The rating values are given on a scale from:
+The rating scale is:
 
 ```text
 0.5 to 5.0
 ```
 
-This dataset is suitable for training and evaluation because it is large, real, and directly connected to recommendation and ranking tasks.
+This dataset is relevant to the project because it contains user-item interactions:
 
----
+```text
+userId → movieId → rating
+```
 
-## 4. Dataset Files
+These interactions allow the model to learn user preferences and movie patterns.
 
-The main files used in this project are:
+### Main Files Used
 
 ```text
 ratings.csv
@@ -119,65 +139,74 @@ movies.csv
 
 ### ratings.csv
 
-This file contains user-movie rating interactions.
-
 | Column | Description |
 |---|---|
-| userId | Unique identifier of a user |
-| movieId | Unique identifier of a movie |
+| userId | Unique user identifier |
+| movieId | Unique movie identifier |
 | rating | Rating value from 0.5 to 5.0 |
 | timestamp | Time when the rating was given |
 
 ### movies.csv
 
-This file contains information about movies.
-
 | Column | Description |
 |---|---|
-| movieId | Unique identifier of a movie |
+| movieId | Unique movie identifier |
 | title | Movie title |
 | genres | Movie genres |
 
----
+### Input Features
 
-## 5. Target Variable
+```text
+userId
+movieId
+```
 
-The target variable is:
+Additional movie information such as `title` and `genres` may be used for analysis and explanation.
+
+### Target Output
 
 ```text
 rating
 ```
 
-The model predicts a numerical rating for a user-movie pair.
+### Data Format
 
-This is a rating prediction task that will be used for recommendation and ranking.
+```text
+CSV
+```
+
+### License / Usage Notes
+
+The dataset is publicly available from GroupLens for research and educational use. Large raw dataset files will not be committed to GitHub. Instead, the repository will include download instructions in the `data/README.md` file.
 
 ---
 
-## 6. Planned Method
+## 4. Planned Method
 
-The project will include a simple baseline model and a deep learning model.
+The project will include a simple baseline model and one deep learning model. The baseline model will be used as a comparison point, and the deep learning model will be used to improve rating prediction.
 
 ---
 
-### 6.1 Baseline Model
+### 4.1 Baseline Model
 
-The baseline model will use simple average rating methods.
+The baseline model will use average rating methods.
 
-Possible baseline methods:
+Planned baseline methods:
 
 ```text
 Global average rating
 Movie average rating
 User average rating
-User-movie average combination
+Combined user-movie average rating
 ```
 
-The baseline model is important because it gives a simple result for comparison. If the deep learning model performs better than the baseline, it means the neural network learned useful patterns from the data.
+The simplest baseline predicts the same average rating for all user-movie pairs. A stronger baseline predicts ratings based on the average rating of each movie or the average rating behavior of each user.
+
+This baseline is useful because it gives a simple result that the deep learning model should improve.
 
 ---
 
-### 6.2 Deep Learning Model
+### 4.2 Deep Learning Model
 
 The main deep learning model will be:
 
@@ -185,7 +214,7 @@ The main deep learning model will be:
 Neural Collaborative Filtering
 ```
 
-The model will use embeddings for users and movies. These embeddings will represent users and movies as numerical vectors.
+This model is appropriate because the project is based on user-item interactions. Neural Collaborative Filtering can learn hidden relationships between users and movies using embedding layers.
 
 ### Model Architecture
 
@@ -215,11 +244,13 @@ Fully Connected Neural Network
 Output Layer
 ```
 
-The model will learn hidden relationships between users and movies. For example, if two users have similar rating behavior, the model may learn similar embeddings for them.
+The user embedding will learn hidden user preferences.  
+The movie embedding will learn hidden movie features.  
+The fully connected layers will combine these embeddings and predict the rating.
 
 ---
 
-## 7. Loss Function
+### 4.3 Loss Function
 
 The loss function will be:
 
@@ -241,7 +272,7 @@ Error: 0.3
 
 ---
 
-## 8. Evaluation Metrics
+### 4.4 Evaluation Metrics
 
 The main evaluation metrics will be:
 
@@ -252,10 +283,10 @@ MAE
 
 ### RMSE
 
-RMSE means Root Mean Squared Error. It measures the average prediction error and gives more penalty to large errors.
+RMSE means Root Mean Squared Error. It measures prediction error and gives stronger penalty to large mistakes.
 
 ```text
-Lower RMSE means better model performance.
+Lower RMSE = better model performance
 ```
 
 ### MAE
@@ -263,14 +294,14 @@ Lower RMSE means better model performance.
 MAE means Mean Absolute Error. It measures the average absolute difference between real ratings and predicted ratings.
 
 ```text
-Lower MAE means better model performance.
+Lower MAE = better model performance
 ```
 
-Other metrics such as accuracy, precision, recall, F1-score, and confusion matrix are not the main metrics for this project because the task is not classification. The project predicts numerical ratings.
+Accuracy, precision, recall, F1-score, and confusion matrix are not the main metrics for this project because the task is not classification. The model predicts numerical ratings.
 
 ---
 
-## 9. Train / Validation / Test Split
+### 4.5 Train / Validation / Test Split Plan
 
 The dataset will be split into three parts:
 
@@ -280,13 +311,49 @@ The dataset will be split into three parts:
 | Validation set | 15% | Used to tune model parameters |
 | Test set | 15% | Used for final evaluation |
 
-The test set will not be used during training or model selection. It will only be used for final evaluation.
+The test set will not be used during training or model selection. It will only be used at the final evaluation stage.
 
 ---
 
-## 10. Repository Structure
+## 5. Expected Challenges
 
-The project repository will be organized as follows:
+One possible challenge is the large size of the MovieLens 20M dataset. It may require more memory and longer training time, so a sample of the dataset may be used during early experiments.
+
+Another challenge is sparsity. Each user rates only a small number of movies compared to the total number of movies. This makes recommendation more difficult because many user-movie pairs have no rating.
+
+The project may also face the cold-start problem. The model may not perform well for new users or new movies that do not have rating history.
+
+Overfitting is another possible issue in the deep learning model. To reduce it, validation results will be monitored, and regularization techniques such as dropout may be used if necessary.
+
+---
+
+## 6. Weekly Plan
+
+| Week | Planned Work | Expected Output |
+|---|---|---|
+| Week 1 | Dataset selection, GitHub repository setup, project structure, dataset instructions, exploratory data analysis | README, data/README.md, Week 1 report, dataset summary |
+| Week 2 | Data preprocessing, userId and movieId encoding, train/validation/test split, baseline model | Processed data, baseline RMSE/MAE results, Week 2 report |
+| Week 3 | Neural Collaborative Filtering model implementation, training loop, experiments with embeddings and hidden layers | Deep learning model results, training plots, Week 3 report |
+| Week 4 | Final evaluation, baseline vs deep learning comparison, error analysis, final report and presentation/demo | Final code, model comparison, final report, presentation/demo |
+
+---
+
+## 7. Repository Plan
+
+The project repository will include:
+
+```text
+source code
+notebooks for experiments
+dataset loading instructions
+model training code
+evaluation code
+weekly progress reports
+final report
+README with running instructions
+```
+
+Recommended repository structure:
 
 ```text
 movie-rating-recommendation/
@@ -317,308 +384,11 @@ movie-rating-recommendation/
 └── final-report.md
 ```
 
----
-
-## 11. Repository Content
-
-The repository will include:
-
-```text
-source code
-notebooks for experiments
-dataset loading instructions
-model training code
-evaluation code
-weekly progress reports
-final report
-README with running instructions
-```
-
-Large raw dataset files will not be uploaded to GitHub. Instead, the repository includes dataset download instructions.
+Large dataset files such as `ratings.csv`, `movies.csv`, and `ml-20m.zip` will not be committed to GitHub. They will be stored locally, and download instructions will be provided in the repository.
 
 ---
 
-## 12. Dataset Preparation
-
-Download the MovieLens 20M dataset from:
-
-```text
-https://files.grouplens.org/datasets/movielens/ml-20m.zip
-```
-
-Extract the ZIP file.
-
-Copy the following files into the `data/` folder:
-
-```text
-ratings.csv
-movies.csv
-```
-
-The final data folder should look like this:
-
-```text
-data/
-├── README.md
-├── ratings.csv
-└── movies.csv
-```
-
-The dataset files are ignored by `.gitignore`, so they should not be committed to GitHub.
-
----
-
-## 13. Installation
-
-### Step 1: Clone the Repository
-
-```bash
-git clone https://github.com/your-username/movie-rating-recommendation.git
-cd movie-rating-recommendation
-```
-
-### Step 2: Create Virtual Environment
-
-```bash
-python -m venv venv
-```
-
-### Step 3: Activate Virtual Environment
-
-For macOS / Linux:
-
-```bash
-source venv/bin/activate
-```
-
-For Windows:
-
-```bash
-venv\Scripts\activate
-```
-
-### Step 4: Install Required Libraries
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## 14. Required Libraries
-
-The project uses the following Python libraries:
-
-```text
-pandas
-numpy
-matplotlib
-scikit-learn
-torch
-tqdm
-joblib
-```
-
----
-
-## 15. How to Run the Project
-
-### 1. Explore the Dataset
-
-```bash
-python src/explore_data.py
-```
-
-This script checks:
-
-```text
-dataset shape
-column names
-missing values
-rating distribution
-number of unique users
-number of unique movies
-ratings per user
-ratings per movie
-```
-
-### 2. Run Data Preprocessing
-
-```bash
-python src/preprocessing.py
-```
-
-This script prepares the dataset for model training.
-
-Main preprocessing steps:
-
-```text
-load ratings.csv
-load movies.csv
-check missing values
-encode userId
-encode movieId
-split data into train, validation, and test sets
-save processed data
-```
-
-### 3. Run Baseline Model
-
-```bash
-python src/baseline_model.py
-```
-
-This script trains and evaluates the baseline model.
-
-### 4. Run Deep Learning Model
-
-```bash
-python src/deep_learning_model.py
-```
-
-This script trains the Neural Collaborative Filtering model.
-
-### 5. Run Evaluation
-
-```bash
-python src/evaluation.py
-```
-
-This script calculates RMSE and MAE for the final model.
-
----
-
-## 16. Expected Output
-
-The final project will produce:
-
-```text
-dataset summary
-rating distribution plot
-baseline model results
-deep learning model results
-RMSE and MAE values
-model comparison table
-final report
-weekly progress reports
-```
-
-Expected result files:
-
-```text
-results/week1_rating_distribution.png
-results/baseline_metrics.txt
-results/deep_learning_metrics.txt
-results/model_comparison.csv
-models/baseline_model.pkl
-models/neural_collaborative_filtering.pt
-```
-
----
-
-## 17. Weekly Plan
-
-| Week | Planned Work | Expected Output |
-|---|---|---|
-| Week 1 | Dataset selection, repository setup, dataset exploration | README, dataset instructions, Week 1 report, dataset summary |
-| Week 2 | Data preprocessing, train/validation/test split, baseline model | Processed data, baseline RMSE/MAE, Week 2 report |
-| Week 3 | Neural Collaborative Filtering model training and experiments | Deep learning model results, plots, Week 3 report |
-| Week 4 | Final evaluation, comparison, final report and presentation | Final code, final report, model comparison, slides/demo |
-
----
-
-## 18. GitHub Commit Plan
-
-The project will be developed gradually over one month. Each week will include meaningful commits.
-
-### Good Commit Examples
-
-```text
-add dataset loading code
-add MovieLens data exploration notebook
-add preprocessing script
-add baseline model
-add neural collaborative filtering model
-add evaluation metrics
-add model comparison table
-update weekly report
-improve README instructions
-fix data split bug
-```
-
-### Weak Commit Examples
-
-```text
-update
-final
-changes
-upload files
-```
-
-The repository should show regular progress, not one final upload at the end.
-
----
-
-## 19. Expected Challenges
-
-Possible challenges in this project include:
-
-```text
-large dataset size
-long model training time
-memory limitations
-sparse user-movie interactions
-cold-start problem for new users or movies
-overfitting in the deep learning model
-```
-
-MovieLens 20M is large, so the project may use sampling during early experiments. Another challenge is that each user rates only a small number of movies compared to the total number of movies, so the user-movie interaction matrix is sparse.
-
----
-
-## 20. Limitations
-
-This project mainly uses rating history. It does not fully use additional information such as movie descriptions, actors, directors, or user demographic information.
-
-The model may also have difficulty recommending movies to new users or new movies with no rating history. This is known as the cold-start problem.
-
----
-
-## 21. Future Improvements
-
-Possible future improvements include:
-
-```text
-using movie genres as additional input features
-testing different embedding sizes
-adding dropout to reduce overfitting
-using timestamps for time-aware recommendation
-building a Top-N recommendation demo
-comparing more recommendation algorithms
-```
-
----
-
-## 22. Final Deliverables
-
-The final submission will include:
-
-```text
-GitHub repository
-README.md
-dataset instructions
-source code
-experiment notebooks
-weekly reports
-final report
-saved results
-trained model files
-presentation or demo
-```
-
----
-
-## 23. References
+## 8. References
 
 1. MovieLens 20M Dataset, GroupLens  
    https://grouplens.org/datasets/movielens/20m/
