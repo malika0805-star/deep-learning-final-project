@@ -12,15 +12,13 @@
 
 **Dataset:** MovieLens 20M  
 
-**Student Name:** Your Name  
+**Student Name:** Shpayeva Malika 
 
-**Group:** Your Group  
+**Instructor:** Ardak Shalkarbay-uly 
 
-**Instructor:** Instructor Name  
+**University:** Narxoz University  
 
-**University:** Your University  
-
-**Date:** 2026  
+**Date:** 2026 may  
 
 ---
 
