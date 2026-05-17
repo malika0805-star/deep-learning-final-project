@@ -15,17 +15,13 @@ venv/
 data/Reviews.csv
 data/*.csv
 data/*.zip
+data/processed/*.csv
 
 # Model files
+models/
 *.pt
 *.pth
 *.pkl
-
-# Results
-results/*.csv
-results/*.png
-results/*.jpg
-results/*.jpeg
 
 # System files
 .DS_Store
