@@ -1,0 +1,18 @@
+Week 4 Final Evaluation Summary
+========================================
+
+Best model based on RMSE:
+Combined User-Movie Average Baseline
+RMSE: 0.9482
+MAE: 0.7399
+
+Neural Collaborative Filtering final test results:
+RMSE: 0.9856
+MAE: 0.7757
+
+Created output files:
+- final_model_comparison.csv
+- week4_error_analysis.csv
+- week4_best_predictions.csv
+- week4_worst_predictions.csv
+- week4_top10_recommendations.csv
